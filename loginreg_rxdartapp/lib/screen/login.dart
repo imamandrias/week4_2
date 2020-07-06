@@ -21,39 +21,55 @@ class _LoginState extends State<Login> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 16.0,),
-                TextField(
-                  onChanged: loginBloc.onChangeUsername,
-                  decoration: InputDecoration(
-                    hintText: 'Masukan Username',
-                    labelText: 'Username',
-                    icon: Icon(Icons.person),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.0)
-                    )
-                  ),
+                StreamBuilder<String>(
+                  stream: loginBloc.username,
+                  builder: (context, snapshot) {
+                    return TextField(
+                      onChanged: loginBloc.onChangeUsername,
+                      decoration: InputDecoration(
+                        hintText: 'Masukan Username',
+                        labelText: 'Username',
+                        icon: Icon(Icons.person),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0)
+                        ),
+                        errorText: snapshot.error
+                      ),
+                    );
+                  }
                 ),
                 SizedBox(height: 8.0,),
-                TextField(
-                  obscureText: true,
-                  onChanged: loginBloc.onChangePassword,
-                  decoration: InputDecoration(
-                      hintText: 'Masukan Password',
-                      labelText: 'Password',
-                      icon: Icon(Icons.lock),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16.0)
-                      )
-                  ),
+                StreamBuilder<String>(
+                  stream: loginBloc.password,
+                  builder: (context, snapshot) {
+                    return TextField(
+                      obscureText: true,
+                      onChanged: loginBloc.onChangePassword,
+                      decoration: InputDecoration(
+                          hintText: 'Masukan Password',
+                          labelText: 'Password',
+                          icon: Icon(Icons.lock),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16.0)
+                          ),
+                        errorText: snapshot.error
+                      ),
+                    );
+                  }
                 ),
-                RaisedButton(
-                  child: Text('Login', style: TextStyle(color: Colors.white),),
-                  color: Colors.blueAccent,
-                  onPressed: (){
-                    loginBloc.login();
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0)
-                  ),
+                StreamBuilder<bool>(
+                  stream: loginBloc.isValid,
+                  builder: (context, snapshot) {
+                    return RaisedButton(
+                      child: Text('Login', style: TextStyle(color: Colors.white),),
+                      color: Colors.blueAccent,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0)
+                      ),
+                      onPressed: snapshot.hasData?
+                      loginBloc.login:null,
+                    );
+                  }
                 )
               ],
             ),
