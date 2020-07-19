@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginreg_rxdartapp/bloc/login_bloc.dart';
+import 'package:loginreg_rxdartapp/screen/register.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Silahkan Login'),
+        title: Text('Welcome'),
         backgroundColor: Colors.cyan,
       ),
       body: Container(
@@ -29,7 +30,7 @@ class _LoginState extends State<Login> {
                       decoration: InputDecoration(
                         hintText: 'Masukan Username',
                         labelText: 'Username',
-                        icon: Icon(Icons.person),
+                          prefixIcon: Icon(Icons.person),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.0)
                         ),
@@ -48,7 +49,7 @@ class _LoginState extends State<Login> {
                       decoration: InputDecoration(
                           hintText: 'Masukan Password',
                           labelText: 'Password',
-                          icon: Icon(Icons.lock),
+                          prefixIcon: Icon(Icons.lock),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16.0)
                           ),
@@ -70,6 +71,20 @@ class _LoginState extends State<Login> {
                       loginBloc.login:null,
                     );
                   }
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(5.0, 0, 2.0, 0),
+                  child: MaterialButton(
+                    textColor: Colors.green,
+                    child: Text('Belum Punya Akun? Silahkan Daftar'),
+                    onPressed: (){
+                      Navigator.push(
+                        context, MaterialPageRoute(
+                        builder: (context) => PageRegister()
+                      )
+                      );
+                    },
+                  ),
                 )
               ],
             ),
